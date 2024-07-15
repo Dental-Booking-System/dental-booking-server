@@ -44,7 +44,7 @@ public class AppointmentResource {
     private Flux<AppointmentResponseDTO> appointmentFlux;
 
     @CrossOrigin
-    @GetMapping(value = "/api/appointments/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/appointments/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<AppointmentResponseDTO> streamAppointments() {
         return this.appointmentFlux;
     }
@@ -90,8 +90,8 @@ public class AppointmentResource {
     @PostMapping("/api/appointments")
     public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDTO appointmentRequestDTO) {
         // check if appointment time is available
-        LocalTime localTime = appointmentRequestDTO.getStart_time().toLocalTime();
-        LocalDate localDate = appointmentRequestDTO.getStart_time().toLocalDate();
+        LocalTime localTime = appointmentRequestDTO.getStart().toLocalTime();
+        LocalDate localDate = appointmentRequestDTO.getStart().toLocalDate();
         DentalService dentalService = dentalServiceRepository.findById(appointmentRequestDTO.getDental_service_id())
                 .orElseThrow(() -> new DentalServiceNotFoundException("id: " + appointmentRequestDTO.getDental_service_id()));
         int duration = dentalService.getApproxDuration();
@@ -101,7 +101,7 @@ public class AppointmentResource {
         }
 
         Appointment appointment = new Appointment();
-        appointment.setStartTime(appointmentRequestDTO.getStart_time());
+        appointment.setStart(appointmentRequestDTO.getStart());
         Patient patient = patientRepository.findByUid(appointmentRequestDTO.getPatient_uid())
                 .orElseThrow(() -> new PatientNotFoundException("uid: " + appointmentRequestDTO.getPatient_uid()));
         Doctor doctor = doctorRepository.findById(appointmentRequestDTO.getDoctor_id())

@@ -14,11 +14,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             "JOIN patient p ON a.patient_id = p.id " +
             "JOIN doctor d ON a.doctor_id = d.id " +
             "JOIN dental_service s ON a.dental_service_id = s.id " +
-            "WHERE start_time BETWEEN ?1 AND ?2",
+            "WHERE start BETWEEN ?1 AND ?2",
             nativeQuery = true)
     List<Appointment> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
 
-    @Query(value = "SELECT a.* FROM appointment a WHERE DATE(a.start_time) = ?1",
+    @Query(value = "SELECT a.* FROM appointment a WHERE DATE(a.start) = ?1",
     nativeQuery = true)
     List<Appointment> findByDate(LocalDate date);
 
@@ -38,7 +38,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
          // Remove the times that are already taken
          for (Appointment appointment : appointments) {
-             LocalTime startTime = appointment.getStartTime().toLocalTime();
+             LocalTime startTime = appointment.getStart().toLocalTime();
              LocalTime endTime = startTime.plusMinutes(appointment.getDuration());
 
              for (LocalTime time = startTime; time.isBefore(endTime); time = time.plusMinutes(slotDuration)) {

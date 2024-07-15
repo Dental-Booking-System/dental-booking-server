@@ -27,7 +27,7 @@ public class Appointment {
     @JoinColumn(name = "dental_service_id", nullable = false)
     private DentalService dentalService;
 
-    private LocalDateTime startTime;
+    private LocalDateTime start;
 
     private Integer duration;
 }

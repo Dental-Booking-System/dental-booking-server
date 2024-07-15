@@ -45,7 +45,10 @@ public class FirebaseAuthFilter extends GenericFilterBean {
         FirebaseAuth auth = null;
         try {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
+            System.out.println(decodedToken);
         } catch (FirebaseAuthException e) {
+            System.out.println(e);
+
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.toString());
             return;
         }

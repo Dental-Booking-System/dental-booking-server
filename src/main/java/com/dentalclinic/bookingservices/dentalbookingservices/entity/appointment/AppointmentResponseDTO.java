@@ -12,7 +12,7 @@ public class AppointmentResponseDTO {
     private DoctorResponseDTO doctor;
     private PatientResponseDTO patient;
     private DentalServiceResponseDTO dentalService;
-    private LocalDateTime startTime;
+    private LocalDateTime start;
     private Integer duration;
 
     public AppointmentResponseDTO(Appointment appointment) {
@@ -20,7 +20,7 @@ public class AppointmentResponseDTO {
         this.doctor = new DoctorResponseDTO(appointment.getDoctor());
         this.patient = new PatientResponseDTO(appointment.getPatient());
         this.dentalService = new DentalServiceResponseDTO(appointment.getDentalService());
-        this.startTime = appointment.getStartTime();
+        this.start = appointment.getStart();
         this.duration = appointment.getDuration();
     }
 }

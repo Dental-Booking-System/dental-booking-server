@@ -1,12 +1,14 @@
 package com.dentalclinic.bookingservices.dentalbookingservices.entity.patient;
 
 import com.dentalclinic.bookingservices.dentalbookingservices.exception.not_found.PatientNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,18 +37,9 @@ public class PatientResource {
 
     @PostMapping("/api/patients")
     public ResponseEntity<Patient> createPatient(@RequestBody PatientRequestDTO patient) {
-        Patient checkPatient = repository.findByUid(patient.getUid())
-                .orElseThrow(() -> new PatientNotFoundException("uid: " + patient.getUid()));
-        if (checkPatient != null) {
-            if (patient.getName() != null) checkPatient.setName(patient.getName());
-            if (patient.getEmail() != null) checkPatient.setEmail(patient.getEmail());
-            if (patient.getPhone() != null) checkPatient.setPhone(patient.getPhone());
-            repository.save(checkPatient);
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(checkPatient.getId())
-                    .toUri();
-            return ResponseEntity.created(location).build();
+        Optional<Patient> checkPatient = repository.findByUid(patient.getUid());
+        if (checkPatient.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // Or a suitable response indicating the patient exists
         }
         Patient newPatient = new Patient();
         newPatient.setUid(patient.getUid());
@@ -56,6 +49,7 @@ public class PatientResource {
         newPatient.setAddress(patient.getAddress());
         newPatient.setBirthDate(patient.getBirthDate());
         repository.save(newPatient);
+        System.out.println(newPatient);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(newPatient.getId())
