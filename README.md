@@ -2,6 +2,8 @@
 
 This **Spring Boot backend** manages authentication, appointments, API handling, and data storage.
 
+For more information, visit the organization page: [Dental Booking System](https://github.com/Dental-Booking-System).
+
 ## ✨ Features
 
 - **Authentication**: Secure login and API routes with Firebase Admin SDK.
