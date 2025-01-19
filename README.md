@@ -1,15 +1,15 @@
-# 🌐 Dental Booking Server - Spring Boot
+# Dental Booking Server - Spring Boot
 
 This **Spring Boot backend** manages authentication, appointments, API handling, and data storage.
 
 For more information, visit the organization page: [Dental Booking System](https://github.com/Dental-Booking-System).
 
-## ✨ Features
+## Features
 
 - **Authentication**: Secure login and API routes with Firebase Admin SDK.
 - **Business Logic**: Handles appointment booking, cancellations, and clinic operations.
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -48,6 +48,6 @@ Ensure the following tools are installed:
    docker run -p 8080:8080 dental-backend
    ```
 
-## 🧑‍💻 Contributors
+## Contributors
 
 - **Tony Vu** – [LinkedIn](https://linkedin.com/in/duyquocvu) | [GitHub](https://github.com/quocduyvu6262)
